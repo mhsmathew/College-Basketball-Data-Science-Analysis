@@ -52,4 +52,39 @@ for year in range(1949, 2021):
     # Append our row to the ongoing list of AP #1 teams
     top_teams = top_teams.append(team_data)
 
-print(top_teams)
+
+# Move team name to the front of the df
+names = top_teams['team']
+top_teams.drop(['team'], axis = 1, inplace = True)
+top_teams.insert(0, 'team_name', names)
+
+### Data Preprocessing
+#Convert all of the columns to their proper datatypes. If the column is a percentage or per-game attribute, it should be a float. Otherwise, an int will suffice.
+
+# Convert non-name columns to float or int
+import numpy as np
+
+top_teams.replace(r'^\s*$', np.NaN, regex=True, inplace = True)
+for column in top_teams:
+    if not column == 'team_name':
+        top_teams[column] = top_teams[column].fillna(-1)
+        if ('pct' in column) or ('per_g' in column):
+            top_teams[column] = top_teams[column].astype(float)
+        else:
+            top_teams[column] = top_teams[column].astype(int)
+        top_teams[column] = top_teams[column].replace('-1', np.nan)    
+    #print (column + ' converted to' + str(type(top_teams[column][-1])))
+
+# Let's see which colleges have been AP Poll #1 ranked the most often, after each season
+counts = top_teams.groupby(['team_name']).count()
+counts['team_name'] = counts.index
+counts.reset_index(drop = True, inplace = True)
+counts.sort_index(by=['pts_for'], ascending = False, inplace = True)
+
+(ggplot(counts, aes(x= 'team_name', y = 'pts_for')) +
+theme(axis_text_x = element_text(angle=90)) +
+xlab('School') + 
+ylab('Number of AP Poll Final #1 Finishes') +
+ggtitle('Number of AP Final #1 Finishes by School') +
+scale_y_continuous(breaks=[2, 4, 6, 8, 10]) +
+geom_col(width = 0.5))
