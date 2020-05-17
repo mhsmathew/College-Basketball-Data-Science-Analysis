@@ -45,7 +45,3 @@ pip install -r requirements.txt
 
 * **Evan Devore** - [Github Repo](https://github.com/edevore)
 * **Mat Steininger** - [Personal Site](https://mathewsteininger.com)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
