@@ -36,6 +36,7 @@ pip install -r requirements.txt
 
 ## Built With
 
+* [Jupyter Notebook](https://jupyter.org) - Python Notebook Interface
 * [Pandas](https://pandas.pydata.org) - Data Analysis Library
 * [Requests](https://requests.readthedocs.io/en/master/) - HTTP Library
 * [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - Web Scraping Library
